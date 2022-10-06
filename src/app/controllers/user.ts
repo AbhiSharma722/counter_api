@@ -33,7 +33,10 @@ let userCtrl = {
     AutoIncrementCounter: () => {
         return new Promise(async (resolve) => {
             User.updateMany({}, { $inc: { counter: 1 } }).exec((err, res)=>{
-                resolve()
+                if(err) {
+                    return resolve({ ...errorObj, message: "Error in incrementing users" })
+                }
+                return resolve()
             })
         });
     },
